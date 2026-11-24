@@ -17,8 +17,15 @@ A single-file control driver for Opentrons hardware, plus a zero-dependency
 - `ot_one_tip_calibrator.py` - guarded interactive console for the original
   OT-One. It commands the shared Z lift only, in steps no larger than 5 mm, and
   preserves the pickup press cycle from the archived OT-One API.
+- [`scripts/jog_z.py`](scripts/jog_z.py) - one bounded relative (`G91`) Z step over serial.
+- [`HARDWARE-FINDINGS.md`](HARDWARE-FINDINGS.md) - what the bench OT-One actually does, measured 2026-07-25.
+- [`TIP-PICKUP.md`](TIP-PICKUP.md) - the measured tip pickup on the bench OT-One, 2026-07-25, and its caveats.
 
 ## Quick start
+
+Python 3. The `sim` and `http` transports and `ot_move_poc.py` use only the
+standard library; the `serial` transport, the USB port list in `detect`, the
+calibrator and `scripts/jog_z.py` need `pip install pyserial`.
 
     python3 ot_driver.py detect                     # what is attached
     python3 ot_driver.py demo --transport sim --go   # full control path, no hardware
@@ -95,8 +102,8 @@ On firmware that exposes a complete envelope, the general driver can use it:
         --learn-limits --go
 
 On this v1.0.3 board the envelope cannot be read, so `--learn-limits` refuses to
-move rather than silently falling back to guesses. Use the Z-only calibrator for
-the current tip-pickup work.
+move rather than silently falling back to guesses. The recorded tip pickup
+used relative `G91` jogging; see `TIP-PICKUP.md`.
 
 ## Safety notes
 
