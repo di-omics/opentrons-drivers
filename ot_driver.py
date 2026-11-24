@@ -1264,7 +1264,7 @@ def cmd_demo(args) -> int:
         return 1
 
     driver.disconnect()
-    print("\nPOC complete: the robot moved under driver control.")
+    print("\nPOC complete: the simulator moved under driver control." if args.transport == "sim" else "\nPOC complete: the robot moved under driver control.")
     return 0
 
 
